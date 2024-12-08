@@ -1,6 +1,5 @@
 import express, {Request, Response, NextFunction} from 'express';
 import cors from 'cors';
-import 'express-async-erros';
 import router from './routes';
 
 const app = express();
@@ -9,20 +8,10 @@ app.use(cors());
 app.use(router);
 
 
-app.use((err: Error,req:Request, res: Response) =>{
-   
-    if(err instanceof Error){
-        return res.status(400).json({
-            err: err.message
-        })
-    }
-
-    return res.status(500).json({
-        status: 'error',
-        message: 'Internal Server Error'
-    })
-
-});
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    console.error(err.stack);
+    res.status(500).send({ error: err.message });
+  });
 
 
 app.use((err:Error, req: Request, res: Response, next:NextFunction) =>{

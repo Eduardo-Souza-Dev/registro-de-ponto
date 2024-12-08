@@ -5,8 +5,7 @@
   "description": "Backend para o registro de ponto",
   "main": "server.js",
   "scripts": {
-    "dev": "npx tsx src/server.ts",
-    "build": "npm install"
+    "dev": "npx tsx src/server.ts"
   },
   "author": "Eduardo",
   "license": "ISC",

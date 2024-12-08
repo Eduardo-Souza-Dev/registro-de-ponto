@@ -1,0 +1,11 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "Front end do Registro de ponto",
+  "main": "index.js",
+  "scripts": {
+    "test": "run dev"
+  },
+  "author": "Eduardo",
+  "license": "ISC"
+}

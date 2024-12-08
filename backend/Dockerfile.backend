@@ -1,0 +1,27 @@
+# syntax=docker/dockerfile:1
+
+ARG NODE_VERSION=20.11.0
+
+# Base stage
+FROM node:${NODE_VERSION}-alpine as base
+
+# Define o diretório de trabalho como raiz do projeto
+WORKDIR /src
+
+# Deps stage
+FROM base as deps
+
+# Copia apenas o arquivo package.json e package-lock.json
+COPY package.json package-lock.json ./
+
+# Instala as dependências
+RUN npm install
+
+# Build stage
+FROM deps as build
+
+# Copia todo o restante dos arquivos
+COPY . .
+
+# Expor a porta que a aplicação utiliza
+EXPOSE 3333

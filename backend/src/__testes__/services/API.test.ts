@@ -1,4 +1,5 @@
 import RegisterUserService from "../../services/RegisterUserService";
+import ConsultUserService from "../../services/ConsultUserService";
 import prismaClient from "../../prisma_connection";
 import {describe, expect, test, it, jest, afterEach} from '@jest/globals';
 
@@ -14,16 +15,23 @@ interface MockUsuario {
 }
 
 describe("API_services", () => {
-    const service = new RegisterUserService();
+    const serviceRegister = new RegisterUserService();
+    const serviceConsult  = new ConsultUserService();
   
     afterEach(() => {
       jest.clearAllMocks();
     });
   
     it("Deve retornar um throw informando que o nome e e-mail são obrigatórios", async () => {
-      await expect(service.execute({ name: "", email: "" }))
+      await expect(serviceRegister.execute({ name: "", email: "" }))
         .rejects
         .toThrow("Nome/E-mail é obrigatório");
+    });
+
+    it("Deve retornar um throw informando que o campo e-mail não pode ser vazio", async () => {
+      await expect(serviceConsult.execute({ email: "" }))
+        .rejects
+        .toThrow("E-mail não pode ser vazio");
     });
 
     // it("should throw an error if email already exists", async () => {

@@ -12,4 +12,4 @@ class RegisterUserController{
     }
 }
 
-
+export default RegisterUserController;

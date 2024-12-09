@@ -12,6 +12,7 @@ model Usuario {
   nome       String
   email      String     @unique
   createdAt  DateTime   @default(now())
+  codigo     String
   updatedAt  DateTime   @updatedAt
 }
 

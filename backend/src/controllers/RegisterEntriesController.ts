@@ -3,11 +3,11 @@ import RegisterEntriesServices from "../services/RegisterEntriesServices";
 
 class RegisterEntriesController{
     async handle(req: Request, res: Response){
-        const { codigo } = req.body;
-        const createUser = new RegisterEntriesServices;
-        const register = await createUser.execute({codigo})
+        const { id } = req.body;
+        const registerEntries = new RegisterEntriesServices;
+        const entries = await registerEntries.execute({id})
 
-        return res.json(register);
+        return res.json(entries);
 
     }
 }

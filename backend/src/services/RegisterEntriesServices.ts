@@ -1,17 +1,26 @@
 import prismaClient from "../prisma_connection";
 
-interface Codigo {
-    codigo: string;
+interface IdUser {
+    id: number;
 }
   
 class RegisterEntriesService{
-    async execute({codigo}: Codigo){
+    async execute({id}: IdUser){
 
-        if(codigo === ''){
-            throw new Error('Código é obrigatório');
+        if(!id){
+            throw new Error('ID inválido!');
         }
 
-        
+        const turnoUser = await prismaClient.turno.create({
+            data: {
+                usuarioId: id,
+                inicio: new Date()
+            }
+        })
+
+        return turnoUser;
+
+
     }
 }
 

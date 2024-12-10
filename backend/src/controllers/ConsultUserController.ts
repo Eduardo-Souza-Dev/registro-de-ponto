@@ -4,10 +4,10 @@ import ConsultUserService from "../services/ConsultUserService";
 class ConsultUserController{
     async handle(req: Request, res: Response){
         const { email } = req.body;
-        const createUser = new ConsultUserService;
-        const register = await createUser.execute({email})
+        const verifyEmail = new ConsultUserService;
+        const email_returned = await verifyEmail.execute({email})
 
-        return res.json(register);
+        return res.json(email_returned);
 
     }
 }

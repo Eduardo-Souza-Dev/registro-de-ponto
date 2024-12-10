@@ -14,14 +14,18 @@ model Usuario {
   createdAt  DateTime   @default(now())
   codigo     String
   updatedAt  DateTime   @updatedAt
+
+  turnos     Turno[]    @relation("UsuarioTurnos")
 }
 
 model Turno {
   id           Int      @id @default(autoincrement())
-  registroId   Int
   inicio       DateTime
   fim          DateTime?
   duracaoHoras Float?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
+  usuarioId    Int      // Chave estrangeira
+  usuario      Usuario  @relation("UsuarioTurnos", fields: [usuarioId], references: [id]) 
 }

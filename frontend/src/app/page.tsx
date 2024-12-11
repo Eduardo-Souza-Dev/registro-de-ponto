@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { FaArrowRight } from "react-icons/fa";
 import { useState } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function Home() {
   const [email, setEmail] = useState('');
@@ -20,11 +21,11 @@ export default function Home() {
       });
 
       // Supondo que a API retorne um código de funcionário
-      setEmployeeCode(response.data.employeeCode);
-      alert('Funcionário registrado com sucesso!');
+      setEmployeeCode(response.data.codigo);
+      toast.success('Funcionário registrado com sucesso!');
     } catch (error) {
       console.error('Erro ao registrar funcionário:', error);
-      alert('Erro ao registrar funcionário. Tente novamente.');
+      toast.error('Erro ao registrar funcionário. Tente novamente.');
     }
   };
 

@@ -10,7 +10,7 @@ export default function Home() {
   const [name, setName] = useState('');
   const [employeeCode, setEmployeeCode] = useState('');
 
-  const handleRegister = async (e:any) => {
+  const handleRegister = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {

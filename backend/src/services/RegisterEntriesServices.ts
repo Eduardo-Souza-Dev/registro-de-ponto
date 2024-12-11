@@ -7,9 +7,9 @@ interface IdUser {
 class RegisterEntriesService{
     async execute({id}: IdUser){
 
-        if(!id){
-            throw new Error('ID inválido!');
-        }
+        // if(id === ''){
+        //     throw new Error('ID inválido!');
+        // }
 
         const turnoUser = await prismaClient.turno.create({
             data: {

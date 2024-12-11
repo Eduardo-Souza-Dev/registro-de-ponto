@@ -1,22 +1,96 @@
 .container {
-    /* Estilos gerais do container */
+    display: flex;
+    flex-direction: column;
+    background-color: #1c1c1c;
+    color: white;
+    min-height: 100vh;
+    padding: 2rem;
   }
   
-  .tabela {
-    /* Estilos da tabela */
-    width: 100%;
-    border-collapse: collapse;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
   }
   
-  .tabela th,
-  .tabela td {
-    /* Estilos das células da tabela */
-    border: 1px solid black;
-    padding: 8px;
+  .header h1 {
+    font-size: 2rem;
+  }
+  
+  .userInfo {
+    text-align: right;
+    font-size: 0.9rem;
+  }
+  
+  .userInfo span {
+    display: block;
+    font-weight: bold;
+  }
+  
+  .main {
+    display: grid;
+    grid-template-columns: repeat(3, 3fr) 2fr;
+    gap: 1rem;
+  }
+  
+  .table {
+    padding: rem;
+    border-radius: 8px;
+  }
+  
+  .title {
+    font-size: 1.5rem;
     text-align: center;
+    margin-bottom: 1rem;
+    color: orange;
   }
   
-  /* Media queries para responsividade */
-  @media (max-width: 768px) {
-    /* Estilos para telas menores */
+  .subtitle {
+    color: #ccc;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
   }
+  
+  .list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .listItem {
+    display: flex;
+    justify-content: space-between;
+    background-color: #333;
+    padding: 0.8rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .aside {
+    text-align: center;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: orange;
+  }
+  
+  .time {
+    font-size: 2.5rem;
+    margin: 0;
+  }
+  
+  @media (max-width: 1024px) {
+    .main {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .main {
+      grid-template-columns: 1fr;
+    }
+  }
+  

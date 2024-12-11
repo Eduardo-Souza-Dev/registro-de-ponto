@@ -2,10 +2,12 @@ import express, {Request, Response, NextFunction} from 'express';
 import cors from 'cors';
 import router from './routes';
 
+
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(router);
+const port = process.env.PORT || 4000;
 
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
@@ -21,4 +23,4 @@ app.use((err:Error, req: Request, res: Response, next:NextFunction) =>{
 });
 
 
-app.listen(3333, () => console.log("Servidor Online"));
+app.listen(port, () => console.log("Servidor Online"));

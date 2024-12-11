@@ -5,7 +5,7 @@
   "description": "Backend para o registro de ponto",
   "main": "server.js",
   "scripts": {
-    "dev": "npx prisma generate && npx tsx src/server.ts",
+    "dev": "npx prisma generate --schema=src/prisma/schema.prisma && npx tsx src/server.ts",
     "test": "jest"
   },
   "author": "Eduardo",

@@ -13,10 +13,12 @@ class CodUserService{
 
         const codigoUser = await prismaClient.usuario.findFirst({
             where: {
-                codigo
-            }
-        })
-
+              codigo: {
+                equals: codigo,
+                mode: 'insensitive', // Compara ignorando maiúsculas/minúsculas
+              },
+            },
+          });
         if(!codigoUser){
             throw new Error('Código inválido');
         }

@@ -29,19 +29,19 @@ const Ponto: React.FC = () => {
 
   const handlePonto = async () => {
     try {
+      // Certifique-se de que o campo enviado corresponde ao esperado no backend
       const entriesPoint = await axios.post('https://registro-de-ponto.onrender.com/user/cod', {
-        codigoUsuario, 
+        codigo: codigoUsuario, 
       });
-
-      const id_usuario = entriesPoint.data.id;
-      console.log(id_usuario);
-      
+  
+      const id_usuario = entriesPoint.data.id; // Recebe o ID do usuário
+      console.log('ID do usuário:', id_usuario);
+  
       const response = await axios.post('https://registro-de-ponto.onrender.com/entry/register', {
-        id_usuario
+        id_usuario,
       });
-
-      console.log(response);
-      
+  
+      console.log('Resposta do registro:', response.data);
     } catch (error) {
       console.error('Erro ao consultar usuário:', error);
       toast.error('Erro ao consultar usuário. Tente novamente.');

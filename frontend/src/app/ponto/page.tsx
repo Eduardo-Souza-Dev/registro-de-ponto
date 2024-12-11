@@ -8,7 +8,6 @@ import { toast } from 'react-toastify';
 const Ponto: React.FC = () => {
   const [codigoUsuario, setCodigoUsuario] = useState('');
   const [email, setEmail] = useState('');
-  const [id, setId] = useState('');
   // const [responseMessage, setResponseMessage] = useState<string>('');
 
   // Função para lidar com a consulta
@@ -34,10 +33,11 @@ const Ponto: React.FC = () => {
         codigoUsuario, 
       });
 
-      setId(entriesPoint.data.id);
+      const id_usuario = entriesPoint.data.id;
+      console.log(id_usuario);
       
       const response = await axios.post('https://registro-de-ponto.onrender.com/entry/register', {
-        id
+        id_usuario
       });
 
       console.log(response);

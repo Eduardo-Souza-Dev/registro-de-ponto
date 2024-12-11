@@ -9,27 +9,16 @@ app.use(cors());
 app.use(router);
 const port = process.env.PORT || 4000;
 
+app.use(cors({
+  origin: 'https://registro-de-ponto-six.vercel.app', // Origem permitida
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos HTTP permitidos
+  allowedHeaders: ['Content-Type', 'Authorization'], // Cabeçalhos permitidos
+}));
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     console.error(err.stack);
     res.status(500).send({ error: err.message });
   });
-
-  app.use(cors({
-    origin: 'https://registro-de-ponto-six.vercel.app', 
-    methods: ['GET', 'POST'], // Métodos HTTP permitidos
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  }));
-
-
-app.use((err:Error, req: Request, res: Response, next:NextFunction) =>{
-    res.header("Access-Control-Allow-Origin", "https://registro-de-ponto.onrender.com");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.setHeader('Access-Control-Allow-Origin', 'https://registro-de-ponto.onrender.com');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});
 
 
 app.listen(port, () => console.log("Servidor Online"));

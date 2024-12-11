@@ -9,6 +9,8 @@ app.use(cors());
 app.use(router);
 const port = process.env.PORT || 4000;
 
+app.options('*', cors());
+
 app.use(cors({
   origin: 'https://registro-de-ponto-six.vercel.app', // Origem permitida
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos HTTP permitidos

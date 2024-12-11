@@ -16,12 +16,12 @@ router.post('/user/register', (req, res) =>{
     const registerUserController = new RegisterUserController();
     registerUserController.handle(req, res);
 });
-router.get('/user/all-points', (req, res) =>{
+router.post('/user/all-points', (req, res) =>{
    const allRegisterUser =  new AllPointsController();
    allRegisterUser.handle(req, res);
 });
 
-router.get('/user/cod', (req, res) =>{
+router.post('/user/cod', (req, res) =>{
     const codUserController = new CodUserController();
     codUserController.handle(req, res);
 })

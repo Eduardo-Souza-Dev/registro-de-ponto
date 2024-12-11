@@ -30,8 +30,8 @@ const Ponto: React.FC = () => {
 
   const handlePonto = async () => {
     try {
-      const entriesPoint = await axios.get('https://registro-de-ponto.onrender.com/user/cod', {
-        params: { codigo: codigoUsuario }, 
+      const entriesPoint = await axios.post('https://registro-de-ponto.onrender.com/user/cod', {
+        codigoUsuario, 
       });
 
       setId(entriesPoint.data.id);

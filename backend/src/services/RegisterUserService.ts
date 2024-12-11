@@ -12,7 +12,7 @@ class RegisterUserService{
             throw new Error('Nome/E-mail é obrigatório');
         }
 
-        const userAlreadyExists = await prismaClient.usuario.findUnique({
+        const userAlreadyExists = await prismaClient.usuario.findFirst({
             where: {
                 email
             }

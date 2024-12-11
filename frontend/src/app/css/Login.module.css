@@ -131,6 +131,7 @@
 
 /* Estilo do campo de entrada */
 .input {
+  color: #1c1c1c;
   padding: 15px;
   border: none;
   outline: none;

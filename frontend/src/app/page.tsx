@@ -1,3 +1,4 @@
+"use client"
 import styles from '../app/css/Login.module.css';
 import Link from 'next/link';
 import { FaArrowRight } from "react-icons/fa";
@@ -6,16 +7,16 @@ import axios from 'axios';
 
 export default function Home() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [employeeCode, setEmployeeCode] = useState('');
 
   const handleRegister = async (e:any) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/user/register', {
+      const response = await axios.post('https://registro-de-ponto.onrender.com/user/register', {
         email,
-        password,
+        name,
       });
 
       // Supondo que a API retorne um código de funcionário
@@ -47,11 +48,11 @@ export default function Home() {
           {/* Campo de senha */}
           <div className={styles.inputContainer}>
             <input
-              type="password"
-              placeholder="Senha"
+              type="text"
+              placeholder="Nome"
               className={styles.input}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               required
             />
           </div>

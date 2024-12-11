@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 const Ponto: React.FC = () => {
   const [codigoUsuario, setCodigoUsuario] = useState('');
   const [email, setEmail] = useState('');
-  const [responseMessage, setResponseMessage] = useState<string>('');
+  // const [responseMessage, setResponseMessage] = useState<string>('');
 
   // Função para lidar com a consulta
   const handleConsultarClick = async () => {
@@ -35,12 +35,14 @@ const Ponto: React.FC = () => {
         params: { codigo: codigoUsuario }, 
       });
 
-      let id_usuario = entriesPoint.data.id;
+      const id_usuario = entriesPoint.data.id;
       console.log(id_usuario);
       
       const response = await axios.post('https://registro-de-ponto.onrender.com/entry/register', {
         id_usuario
       });
+
+      console.log(response)
       
     } catch (error) {
       console.error('Erro ao consultar usuário:', error);
@@ -84,9 +86,6 @@ const Ponto: React.FC = () => {
             Consultar
           </button>
         </div>
-
-        {/* Exibir a resposta da consulta */}
-        {responseMessage && <p className={styles.responseMessage}>{responseMessage}</p>}
 
         <Link href={"/relogio-ponto"}>
           <p className={styles.footerLink}>Consultar meu relógio de pontos</p>

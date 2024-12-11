@@ -1,120 +1,177 @@
 .container {
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .leftSide {
-    flex: 1;
-    background-color: #1c1c1c;
-    color: #fff;
-    display: flex;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  font-family: 'Arial', sans-serif;
+}
+
+.leftSide {
+  flex: 1;
+  background-color: #1c1c1c;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.title {
+  color: #CFCFCF;
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 30px;
+}
+
+.codeContainer {
+  margin-top: 5%;
+  text-align: center;
+}
+
+.codeText {
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.codeButton {
+  background-color: #ffa500;
+  border: none;
+  border-radius: 4px;
+  padding: 20px;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.codeButton:hover {
+  background-color: #e69500;
+}
+
+.rightSide {
+  flex: 0.3;
+  background-color: #F28B04;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrowButton {
+  align-items: center;
+  background-color: #F1F1F1;
+  border: none;
+  border-radius: 4px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.arrowButton:hover {
+  background-color: #f0f0f0;
+}
+
+.arrow {
+  align-items: center;
+
+  font-size: 1.5rem;
+  color: #333333;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
   }
-  
-  .title {
-    font-size: 2rem;
-    margin-bottom: 30px;
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 300px;
-    margin-bottom: 30px;
-  }
-  
-  .input {
-    background-color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 15px;
-    font-size: 1rem;
-    color: #333;
-  }
-  
-  .input:focus {
-    outline: 2px solid #ffa500;
-  }
-  
-  .codeContainer {
-    text-align: center;
-  }
-  
-  .codeText {
-    margin-bottom: 10px;
-    font-size: 1rem;
-  }
-  
-  .codeButton {
-    background-color: #ffa500;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    color: #fff;
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  .codeButton:hover {
-    background-color: #e69500;
-  }
-  
+
   .rightSide {
-    flex: 0.3;
-    background-color: #ffa500;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    flex: none;
+    width: 100%;
+    height: 15%;
   }
-  
-  .arrowButton {
-    background-color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+
+  .leftSide {
+    flex: none;
+    height: 85%;
+    padding: 10px;
   }
-  
-  .arrowButton:hover {
-    background-color: #f0f0f0;
+
+  .form {
+    max-width: 100%;
   }
-  
-  .arrow {
-    font-size: 2rem;
-    color: #333;
-  }
-  
-  /* Responsividade */
-  @media (max-width: 768px) {
-    .container {
-      flex-direction: column;
-    }
-  
-    .rightSide {
-      flex: none;
-      width: 100%;
-      height: 15%;
-    }
-  
-    .leftSide {
-      flex: none;
-      height: 85%;
-      padding: 10px;
-    }
-  
-    .form {
-      max-width: 100%;
-    }
-  }
+}
+
+/* Estilo do contêiner para o input */
+.inputContainer {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 25px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Barra colorida à esquerda */
+.inputContainer::before {
+  content: "";
+  width: 9px;
+  height: 100%;
+  background-color: orange;
+}
+
+/* Estilo do campo de entrada */
+.input {
+  padding: 15px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  width: 100%;
+  background-color: transparent;
+}
+
+/* Placeholder estilizado */
+.input::placeholder {
+  color: #aaa;
+}
+
+.btnContainer{
+
+  width: 100%;
+  padding: 0;
+  display: flex;
+  justify-content: start;
+}
+
+.registerButton {
+  margin-top: 15px;
+  background-color: orange;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 26px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.registerButton:hover {
+  background-color: #e66a00;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.registerButton:active {
+  background-color: #e66a00;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

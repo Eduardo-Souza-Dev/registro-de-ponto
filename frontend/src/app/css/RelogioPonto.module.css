@@ -1,0 +1,22 @@
+.container {
+    /* Estilos gerais do container */
+  }
+  
+  .tabela {
+    /* Estilos da tabela */
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .tabela th,
+  .tabela td {
+    /* Estilos das células da tabela */
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  /* Media queries para responsividade */
+  @media (max-width: 768px) {
+    /* Estilos para telas menores */
+  }

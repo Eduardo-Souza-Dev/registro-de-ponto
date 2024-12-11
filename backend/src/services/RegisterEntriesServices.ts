@@ -15,6 +15,10 @@ class RegisterEntriesService{
             data: {
                 usuarioId: id,
                 inicio: new Date()
+            },
+            select:{
+                id:true,
+                inicio:true
             }
         })
 

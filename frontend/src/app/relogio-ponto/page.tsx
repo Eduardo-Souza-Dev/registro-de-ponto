@@ -9,7 +9,7 @@ interface Props {
   }[];
 }
 
-const RelogioPonto: React.FC<Props> = ({ dados }) => {
+const RelogioPonto: React.FC<Props> = () => {
   return (
     <div className={styles.container}>
       <h1>Relógio de ponto</h1>

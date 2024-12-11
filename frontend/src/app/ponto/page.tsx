@@ -7,18 +7,18 @@ const Ponto: React.FC = () => {
   const [codigoUsuario, setCodigoUsuario] = useState('');
   const [email, setEmail] = useState('');
 
-  const handleCodigoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCodigoUsuario(e.target.value);
-  };
+//   const handleCodigoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setCodigoUsuario(e.target.value);
+//   };
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
+//   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setEmail(e.target.value);
+//   };
 
-  const handleConfirmarClick = () => {
-    // Aqui você pode adicionar a lógica para validar ou enviar o código do usuário
-    console.log('Código do usuário:', codigoUsuario);
-  };
+//   const handleConfirmarClick = () => {
+//     // Aqui você pode adicionar a lógica para validar ou enviar o código do usuário
+//     console.log('Código do usuário:', codigoUsuario);
+//   };
 
   return (
     <div className={styles.container}>

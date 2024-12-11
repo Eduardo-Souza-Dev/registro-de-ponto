@@ -19,6 +19,9 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 app.use((err:Error, req: Request, res: Response, next:NextFunction) =>{
     res.header("Access-Control-Allow-Origin", "https://registro-de-ponto.onrender.com");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.setHeader('Access-Control-Allow-Origin', 'https://registro-de-ponto.onrender.com');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 });
 

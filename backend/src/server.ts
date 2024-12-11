@@ -15,6 +15,12 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     res.status(500).send({ error: err.message });
   });
 
+  app.use(cors({
+    origin: 'https://registro-de-ponto-six.vercel.app', 
+    methods: ['GET', 'POST'], // Métodos HTTP permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  }));
+
 
 app.use((err:Error, req: Request, res: Response, next:NextFunction) =>{
     res.header("Access-Control-Allow-Origin", "https://registro-de-ponto.onrender.com");

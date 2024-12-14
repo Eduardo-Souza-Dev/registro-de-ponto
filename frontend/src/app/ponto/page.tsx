@@ -4,7 +4,6 @@ import styles from '../css/CodPage.module.css'
 import Link from 'next/link';
 import axios from 'axios';  // Certifique-se de instalar axios com `npm install axios` ou `yarn add axios`
 import { toast } from 'react-toastify';
-import { headers } from 'next/headers';
 
 const Ponto: React.FC = () => {
   const [codigoUsuario, setCodigoUsuario] = useState('');
@@ -39,10 +38,6 @@ const Ponto: React.FC = () => {
       console.log('ID do usuário:', id_usuario);
   
       const response = await axios.post('https://registro-de-ponto.onrender.com/entry/register', {
-        withCredentials: true,
-        headers:{
-          'Content-Type': 'application/json',
-        },
         id_usuario,
       });
   

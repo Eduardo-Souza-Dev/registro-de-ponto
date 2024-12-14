@@ -10,8 +10,20 @@ app.use(express.json());
 
 // Configuração CORS
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, UPDATE");
+  const allowedOrigins = [
+    'http://localhost:3000',
+    'https://registro-de-ponto-six.vercel.app',
+  ];
+  
+  const origin = req.headers.origin;
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, UPDATE");
+  
   next();
 });
 

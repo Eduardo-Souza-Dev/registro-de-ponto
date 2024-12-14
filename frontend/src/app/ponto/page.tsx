@@ -34,11 +34,11 @@ const Ponto: React.FC = () => {
         codigo: codigoUsuario, 
       });
   
-      const id_usuario = entriesPoint.data.id; // Recebe o ID do usuário
-      console.log('ID do usuário:', id_usuario);
+      const id = entriesPoint.data.id; // Recebe o ID do usuário
+      console.log('ID do usuário:', id);
   
       const response = await axios.post('https://registro-de-ponto.onrender.com/entry/register', {
-        id_usuario,
+        id,
       });
   
       console.log('Resposta do registro:', response.data);

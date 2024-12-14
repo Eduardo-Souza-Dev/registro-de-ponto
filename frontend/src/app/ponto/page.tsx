@@ -53,7 +53,7 @@ const Ponto: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.leftSection}>
         <h1 className={styles.title}>
-          Ponto <span className={styles.highlight}>Ilumeo</span>
+          Ponto <span className={styles.highlight}>Company</span>
         </h1>
         <div className={styles.formGroup}>
           <input

@@ -3,9 +3,9 @@ import RegisterExitService from "../services/RegisterExitService";
 
 class RegisterExitController{
     async handle(req: Request, res: Response): Promise<Response>{
-        const { id_turno } = req.body;
+        const { id } = req.body;
         const registerExit = new RegisterExitService;
-        const exit = await registerExit.execute({id_turno})
+        const exit = await registerExit.execute({id})
 
         return res.json(exit);
 

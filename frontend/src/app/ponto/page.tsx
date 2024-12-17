@@ -29,12 +29,11 @@ const Ponto: React.FC = () => {
 
   const handlePonto = async () => {
     try {
-      // Certifique-se de que o campo enviado corresponde ao esperado no backend
       const entriesPoint = await axios.post('https://registro-de-ponto.onrender.com/user/cod', {
         codigo: codigoUsuario, 
       });
   
-      const id = entriesPoint.data.id; // Recebe o ID do usuário
+      const id = entriesPoint.data.id;
       console.log('ID do usuário:', id);
   
       const response = await axios.post('https://registro-de-ponto.onrender.com/entry/register', {

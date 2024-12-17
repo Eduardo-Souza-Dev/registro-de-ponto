@@ -3,6 +3,7 @@ import ConsultUserService from "../../services/ConsultUserService";
 import RegisterEntriesService from "../../services/RegisterEntriesServices";
 import RegisterExitService from "../../services/RegisterExitService";
 import AllPointsServices from "../../services/AllPointsServices";
+import VerifyPointServices from "../../services/VerifyPointServices";
 import prismaClient from "../../prisma_connection";
 import {describe, expect, test, it, jest, afterEach} from '@jest/globals';
 
@@ -26,6 +27,7 @@ describe("API_services", () => {
     const serviceRegisterEntries = new RegisterEntriesService();
     const serviceRegisterExit = new RegisterExitService();
     const serviceAllPoints = new AllPointsServices();
+    const verifyPoints = new VerifyPointServices();
   
     afterEach(() => {
       jest.clearAllMocks();
@@ -72,7 +74,7 @@ describe("API_services", () => {
 
     // Teste de ID 
     it("Deve lançar um erro se o ID do turno não for fornecido", async () => {
-      await expect(serviceRegisterExit.execute({ id_turno: undefined as unknown as number })).rejects.toThrow("ID inválido!");
+      await expect(serviceRegisterExit.execute({ id: undefined as unknown as number })).rejects.toThrow("ID inválido!");
     });
 
 
@@ -98,6 +100,11 @@ describe("API_services", () => {
         take: 10,
       });
     });
+
+
+    it('Deve me retornar se o usuário possui registro na data fim ou inicio', () =>{
+      // await expect(verifyPoints.execute({ user_id: undefined })).rejects.toThrow('Usuário não informado/inválido!');
+    })
 
     
   });

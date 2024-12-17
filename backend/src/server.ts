@@ -3,6 +3,7 @@ import cors from 'cors';
 import router from './routes';
 
 const app = express();
+app.options('*', cors());
 app.use(cors());
 
 // Middleware para parsear JSON

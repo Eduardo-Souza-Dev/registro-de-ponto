@@ -42,11 +42,13 @@ class VerifyPointServices{
 
             if(verifyPoint?.inicio != null){
                 return {
-                    message: "Data de inicio já registrada: " + verifyPoint.inicio
+                    message: "Data de inicio já registrada"
                 }
             }else if(verifyPoint?.usuarioId != null){
+                return  "Data fim já registrada";
+            }else if(verifyPoint?.inicio != null && verifyPoint?.fim != null){
                 return {
-                    message: "Data fim já registrada: " + verifyPoint.fim
+                    message: "Ambas as datas registradas" 
                 }
             }
     }

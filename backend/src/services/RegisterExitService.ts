@@ -34,7 +34,7 @@ class RegisterExitService{
         })
 
         if(verifyDate?.inicio){
-          if(verifyDate?.inicio.getTime() < now.getTime()){
+          if((verifyDate?.inicio.getTime() < now.getTime()) || (verifyDate?.inicio.getTime() > now.getTime())){
             const turnoUser = await prismaClient.turno.update({
               where: {
                 id: id,

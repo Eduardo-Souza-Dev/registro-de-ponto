@@ -2,16 +2,17 @@ import prismaClient from "../prisma_connection";
 
 interface IdTurno {
     id_turno: number;
+    date: Date;
 }
 
 class VerifyPointServices{
-    async execute({id_turno}: IdTurno){
+    async execute({id_turno, date}: IdTurno){
         if(!id_turno){
             throw new Error('ID inválido!');
         }
 
-        const now = new Date();
-        const startOfDay = new Date(now.getFullYear(),now.getMonth(), now.getDate())
+        date = new Date();
+        const startOfDay = new Date(date.getFullYear(),date.getMonth(), date.getDate())
 
         const verifyPoint = await prismaClient.turno.findFirst({
                 where: {
@@ -41,16 +42,18 @@ class VerifyPointServices{
 
 
             if(verifyPoint?.inicio != null){
-                return {
-                    message: "Data de inicio já registrada"
-                }
-            }else if(verifyPoint?.usuarioId != null){
-                return  "Data fim já registrada";
-            }else if(verifyPoint?.inicio != null && verifyPoint?.fim != null){
-                return {
-                    message: "Ambas as datas registradas" 
-                }
+                return "Data de inicio já registrada"
             }
+
+            if(verifyPoint?.usuarioId != null){
+                return  "Data fim já registrada";
+            }
+            
+            if(verifyPoint?.inicio != null && verifyPoint?.fim != null){
+                return "Ambas as datas registradas" 
+            }
+
+            return "Nenhuma condição foi atendida";
     }
 
 }

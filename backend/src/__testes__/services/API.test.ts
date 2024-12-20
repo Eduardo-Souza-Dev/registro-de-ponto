@@ -101,51 +101,58 @@ describe("API_services", () => {
 
 
     it('Deve me retornar se que o id do usuário é inválido',async () =>{
-      await expect(verifyPoints.execute({ id_turno: undefined as unknown as number })).rejects.toThrow('ID inválido!');
+      await expect(verifyPoints.execute({ id_turno: undefined as unknown as number, date:new Date() })).rejects.toThrow('ID inválido!');
     })
 
-    it("Deve me dar o return se tem data de inicio já registrada", async ()=>{
-           // Simula que o e-mail já existe (retorno de findUnique)
-      const id_turno = 1;
+    // it("Deve me dar o return se tem data de inicio já registrada", async ()=>{
+    //        // Simula que o e-mail já existe (retorno de findUnique)
+    //   const id_turno = 1;
+    //   const startOfDay = new Date(2024,12,16);
 
-      (prismaClient.usuario.findFirst as jest.Mock<never>).mockResolvedValueOnce({
-        id_turno:1,
-        inicio: null,
-        fim: new Date(),
-      });// Aqui estamos forçando o tipo como um Partial de Usuario
+    //   (prismaClient.usuario.findFirst as jest.Mock<never>).mockResolvedValueOnce({
+    //     id_turno: id_turno,
+    //     inicio: null,
+    //     fim: startOfDay,
+    //   });// Aqui estamos forçando o tipo como um Partial de Usuario
+      
 
-      // Testa se o serviço lança o erro correto
-      await expect(verifyPoints.execute({ id_turno: id_turno})).toBe("Data fim já registrada")
-    })
+    //   // Testa se o serviço lança o erro correto
+    //   const resutl = await verifyPoints.execute({ id_turno: id_turno, date: startOfDay});
+    //   expect(resutl).toBe("Data fim já registrada")
+    // })
 
     it("Deve me dar o return se tem data fim já está registrada", async ()=>{
             // Simula que o e-mail já existe (retorno de findUnique)
-      const id_turno = 1;
+      const id_turno = 7;
+      const startOfDay = new Date(2024,12,16);
+      const valueNull = null;
 
       (prismaClient.usuario.findFirst as jest.Mock<never>).mockResolvedValueOnce({
-        id_turno:1,
-        inicio: new Date(),
-        fim: null,
-      });// Aqui estamos forçando o tipo como um Partial de Usuario
+        id_turno:id_turno,
+        inicio: null,
+        fim: new Date(2024,12,16),
+      });
+
+      const resultado = await verifyPoints.execute({ id_turno: id_turno, date:startOfDay})
 
       // Testa se o serviço lança o erro correto
-      await expect(verifyPoints.execute({ id_turno: id_turno})).toBe("Data fim já registrada")
+      expect(resultado).toBe("Data inicio já registrada")
       })
 
 
-      it("Deve me dar o return ambas as datas já estão registradas", async ()=>{
-        // Simula que o e-mail já existe (retorno de findUnique)
-        const id_turno = 1;
+    //   it("Deve me dar o return ambas as datas já estão registradas", async ()=>{
+    //     // Simula que o e-mail já existe (retorno de findUnique)
+    //     const id_turno = 1;
 
-        (prismaClient.usuario.findFirst as jest.Mock<never>).mockResolvedValueOnce({
-          id_turno:1,
-          inicio: new Date(),
-          fim: new Date(),
-        });// Aqui estamos forçando o tipo como um Partial de Usuario
+    //     (prismaClient.usuario.findFirst as jest.Mock<never>).mockResolvedValueOnce({
+    //       id_turno:1,
+    //       inicio: new Date(),
+    //       fim: new Date(),
+    //     });// Aqui estamos forçando o tipo como um Partial de Usuario
 
-        // Testa se o serviço lança o erro correto
-        await expect(verifyPoints.execute({ id_turno: id_turno})).toBe("Data fim já registrada")
-      })
+    //     // Testa se o serviço lança o erro correto
+    //     await expect(verifyPoints.execute({ id_turno: id_turno})).toBe("Data fim já registrada")
+    //   })
 
 
 

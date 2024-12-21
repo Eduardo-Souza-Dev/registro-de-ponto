@@ -6,6 +6,15 @@ import AllPointsServices from "../../services/AllPointsServices";
 import VerifyPointServices from "../../services/VerifyPointServices";
 import prismaClient from "../../prisma_connection";
 import {describe, expect, test, it, jest, afterEach} from '@jest/globals';
+import { MockContext, Context, createMockContext } from "./context";
+
+let mockCtx: MockContext;
+let ctx: Context;
+
+beforeEach(() =>{
+  mockCtx = createMockContext();
+  ctx = mockCtx as unknown as Context;
+})
 
 jest.mock("../../prisma_connection", () => ({
   usuario: {
@@ -19,9 +28,6 @@ jest.mock("../../prisma_connection", () => ({
   },
 }));
 
-interface MockUsuario {
-  email: string;
-}
 
 describe("API_services", () => {
     const serviceRegister = new RegisterUserService();
@@ -124,19 +130,29 @@ describe("API_services", () => {
     it("Deve me dar o return se tem data fim já está registrada", async ()=>{
             // Simula que o e-mail já existe (retorno de findUnique)
       const id_turno = 7;
-      const startOfDay = new Date(2024,12,16);
+      const startOfDay = new Date();
       const valueNull = null;
+      const teste = {
+        id_turno: id_turno,
+        date: valueNull,
+      }
+  
 
-      (prismaClient.usuario.findFirst as jest.Mock<never>).mockResolvedValueOnce({
-        id_turno:id_turno,
-        inicio: null,
-        fim: new Date(2024,12,16),
-      });
+      // expect((prismaClient.turno.findFirst as jest.Mock<never>).mockResolvedValue({id_turno,startOfDay})).toBe("Data inicio já registrada")
+
+      
+
+      const mockFindFirst = jest.fn<never>().mockResolvedValueOnce({
+        id_turno: id_turno,
+        date: startOfDay,
+      })
+
+      prismaClient.turno.findFirst = mockFindFirst as unknown as typeof prismaClient.turno.findFirst;
 
       const resultado = await verifyPoints.execute({ id_turno: id_turno, date:startOfDay})
 
       // Testa se o serviço lança o erro correto
-      expect(resultado).toBe("Data inicio já registrada")
+      expect(resultado).toBe("Data inicio já registrada");
       })
 
 

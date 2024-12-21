@@ -11,7 +11,7 @@ class VerifyPointServices{
             throw new Error('ID inválido!');
         }
 
-        date = new Date();
+        // date = new Date();
         const startOfDay = new Date(date.getFullYear(),date.getMonth(), date.getDate())
 
         const verifyPoint = await prismaClient.turno.findFirst({
@@ -40,6 +40,8 @@ class VerifyPointServices{
                 }
             })
 
+            console.log(verifyPoint);
+
 
             if(verifyPoint?.inicio != null){
                 return "Data de inicio já registrada"
@@ -53,7 +55,7 @@ class VerifyPointServices{
                 return "Ambas as datas registradas" 
             }
 
-            return "Nenhuma condição foi atendida";
+            return date;
     }
 
 }

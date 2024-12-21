@@ -1,36 +1,34 @@
 import prismaClient from "../prisma_connection";
 
 interface IdTurno {
-    id_turno: number;
+    usuarioId: number;
     date: Date;
 }
 
 class VerifyPointServices{
-    async execute({id_turno, date}: IdTurno){
-        if(!id_turno){
+    async execute({usuarioId, date}: IdTurno){
+        if(!usuarioId){
             throw new Error('ID inválido!');
         }
 
-        // date = new Date();
         const startOfDay = new Date(date.getFullYear(),date.getMonth(), date.getDate())
+        const dateString = startOfDay.toISOString().split('T')[0]
 
         const verifyPoint = await prismaClient.turno.findFirst({
                 where: {
-                    AND: [
-                        {id: id_turno}, 
-                    ], 
-                    OR: [
-                        {
-                            fim: {
-                                gte: startOfDay
-                            }
-                        },
-                        {
-                            inicio: {
-                                gte: startOfDay
-                            }
-                        },
-                    ]
+                    usuarioId: usuarioId,
+                        OR: [
+                            {
+                                fim: {
+                                    gte: dateString
+                                }
+                            },
+                            {
+                                inicio: {
+                                    gte: dateString
+                                }
+                            },
+                        ]
                 },
                 select: {
                     id: true,
@@ -40,22 +38,22 @@ class VerifyPointServices{
                 }
             })
 
-            console.log(verifyPoint);
+            console.log('Value verifyPoint: ' + verifyPoint);
 
 
-            if(verifyPoint?.inicio != null){
+            if(verifyPoint?.inicio){
                 return "Data de inicio já registrada"
             }
 
-            if(verifyPoint?.usuarioId != null){
+            if(verifyPoint?.fim){
                 return  "Data fim já registrada";
             }
             
-            if(verifyPoint?.inicio != null && verifyPoint?.fim != null){
+            if(verifyPoint?.inicio && verifyPoint?.fim){
                 return "Ambas as datas registradas" 
             }
 
-            return date;
+            return verifyPoint;
     }
 
 }

@@ -7,6 +7,7 @@ import VerifyPointServices from "../../services/VerifyPointServices";
 import prismaClient from "../../prisma_connection";
 import {describe, expect, test, it, jest, afterEach} from '@jest/globals';
 import { MockContext, Context, createMockContext } from "./context";
+import { prismaMock } from "../../singleton";
 
 let mockCtx: MockContext;
 let ctx: Context;
@@ -127,32 +128,21 @@ describe("API_services", () => {
     //   expect(resutl).toBe("Data fim já registrada")
     // })
 
-    it("Deve me dar o return se tem data fim já está registrada", async ()=>{
-            // Simula que o e-mail já existe (retorno de findUnique)
-      const id_turno = 7;
-      const startOfDay = new Date();
-      const valueNull = null;
-      const teste = {
-        id_turno: id_turno,
-        date: valueNull,
-      }
-  
+    it("Deve me dar o return se tem data inicio já está registrada", async ()=>{
+      const date = new Date(2024,11,16)
 
-      // expect((prismaClient.turno.findFirst as jest.Mock<never>).mockResolvedValue({id_turno,startOfDay})).toBe("Data inicio já registrada")
-
+        const teste = {
+          usuarioId: 3,
+          date: date
+        };
       
+        (prismaClient.turno.findFirst as jest.Mock<never>).mockResolvedValueOnce(teste);
 
-      const mockFindFirst = jest.fn<never>().mockResolvedValueOnce({
-        id_turno: id_turno,
-        date: startOfDay,
-      })
+        const resultado = await verifyPoints.execute({ usuarioId: teste.usuarioId, date: teste.date });
 
-      prismaClient.turno.findFirst = mockFindFirst as unknown as typeof prismaClient.turno.findFirst;
+        expect(resultado).toBe("Data inicio já registrada");
 
-      const resultado = await verifyPoints.execute({ id_turno: id_turno, date:startOfDay})
 
-      // Testa se o serviço lança o erro correto
-      expect(resultado).toBe("Data inicio já registrada");
       })
 
 

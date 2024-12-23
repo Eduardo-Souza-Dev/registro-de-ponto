@@ -108,7 +108,7 @@ describe("API_services", () => {
 
 
     it('Deve me retornar se que o id do usuário é inválido',async () =>{
-      await expect(verifyPoints.execute({ id_turno: undefined as unknown as number, date:new Date() })).rejects.toThrow('ID inválido!');
+      await expect(verifyPoints.execute({ usuarioId: undefined as unknown as number, data_inicio:new Date(), data_fim: new Date() })).rejects.toThrow('ID inválido!');
     })
 
     // it("Deve me dar o return se tem data de inicio já registrada", async ()=>{
@@ -128,19 +128,48 @@ describe("API_services", () => {
     //   expect(resutl).toBe("Data fim já registrada")
     // })
 
-    it("Deve me dar o return se tem data inicio já está registrada", async ()=>{
+    it("Deve me dar o return se tem data inicio já está registrada e data fim esta nulla", async ()=>{
       const date = new Date(2024,11,16)
 
         const teste = {
           usuarioId: 3,
-          date: date
+          data_inicio: date,
+          data_fim: null
         };
       
-        (prismaClient.turno.findFirst as jest.Mock<never>).mockResolvedValueOnce(teste);
+        (prismaClient.turno.findFirst as jest.Mock<never>).mockResolvedValueOnce({
+          usuarioId: teste.usuarioId,
+          inicio: new Date(),
+          fim: null,
+        });
 
-        const resultado = await verifyPoints.execute({ usuarioId: teste.usuarioId, date: teste.date });
+        const resultado = await verifyPoints.execute({ usuarioId: teste.usuarioId, data_inicio: teste.data_inicio, data_fim: null });
 
         expect(resultado).toBe("Data inicio já registrada");
+
+        expect(prismaClient.turno.findFirst).toHaveBeenCalledWith({
+          where: {
+            usuarioId: teste.usuarioId,
+            OR: [
+              {
+                inicio: {
+                  gte: teste.data_inicio.toISOString().split('T')[0]
+                }
+              },
+              {
+                fim: {
+                  gte: null
+                }
+              },
+            ]
+          },
+          select: {
+            id: true,
+            usuarioId: true,
+            fim: true,
+            inicio: true,
+          }
+        });
 
 
       })

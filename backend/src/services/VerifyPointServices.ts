@@ -2,32 +2,45 @@ import prismaClient from "../prisma_connection";
 
 interface IdTurno {
     usuarioId: number;
-    date: Date;
+    data_inicio: Date | null;
+    data_fim: Date | null;
 }
 
 class VerifyPointServices{
-    async execute({usuarioId, date}: IdTurno){
+    async execute({usuarioId, data_inicio, data_fim}: IdTurno){
         if(!usuarioId){
             throw new Error('ID inválido!');
         }
 
-        const startOfDay = new Date(date.getFullYear(),date.getMonth(), date.getDate())
-        const dateString = startOfDay.toISOString().split('T')[0]
+        let dateStringInicio;
+        let dateStringFim;
 
+        if(data_inicio !== null){
+            const startOfDay = new Date(data_inicio.getFullYear(),data_inicio.getMonth(), data_inicio.getDate())
+            dateStringInicio = startOfDay.toISOString().split('T')[0]
+        }
+        
+        if(data_fim !== null){
+            const endOfDay = new Date(data_fim.getFullYear(),data_fim.getMonth(), data_fim.getDate());
+            dateStringFim = endOfDay.toISOString().split('T')[0]
+        }
+        
+        
         const verifyPoint = await prismaClient.turno.findFirst({
                 where: {
                     usuarioId: usuarioId,
                         OR: [
-                            {
-                                fim: {
-                                    gte: dateString
-                                }
-                            },
+
                             {
                                 inicio: {
-                                    gte: dateString
+                                    gte: dateStringInicio
                                 }
                             },
+                            {
+                                fim: {
+                                    gte: dateStringFim
+                                }
+                            },  
                         ]
                 },
                 select: {
@@ -38,11 +51,11 @@ class VerifyPointServices{
                 }
             })
 
-            console.log('Value verifyPoint: ' + verifyPoint);
+            console.log('Value verifyPoint: ' + verifyPoint?.id);
 
 
             if(verifyPoint?.inicio){
-                return "Data de inicio já registrada"
+                return "Data inicio já registrada"
             }
 
             if(verifyPoint?.fim){
@@ -53,7 +66,7 @@ class VerifyPointServices{
                 return "Ambas as datas registradas" 
             }
 
-            return verifyPoint;
+            return "Nenhum valor registrado";
     }
 
 }

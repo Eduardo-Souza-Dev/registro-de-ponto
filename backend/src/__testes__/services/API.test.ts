@@ -6,16 +6,6 @@ import AllPointsServices from "../../services/AllPointsServices";
 import VerifyPointServices from "../../services/VerifyPointServices";
 import prismaClient from "../../prisma_connection";
 import {describe, expect, test, it, jest, afterEach} from '@jest/globals';
-import { MockContext, Context, createMockContext } from "./context";
-import { prismaMock } from "../../singleton";
-
-let mockCtx: MockContext;
-let ctx: Context;
-
-beforeEach(() =>{
-  mockCtx = createMockContext();
-  ctx = mockCtx as unknown as Context;
-})
 
 jest.mock("../../prisma_connection", () => ({
   usuario: {
@@ -109,56 +99,39 @@ describe("API_services", () => {
 
     it('Deve me retornar se que o id do usuário é inválido',async () =>{
       await expect(verifyPoints.execute({ usuarioId: undefined as unknown as number, data_inicio:new Date(), data_fim: new Date() })).rejects.toThrow('ID inválido!');
-    })
-
-    // it("Deve me dar o return se tem data de inicio já registrada", async ()=>{
-    //        // Simula que o e-mail já existe (retorno de findUnique)
-    //   const id_turno = 1;
-    //   const startOfDay = new Date(2024,12,16);
-
-    //   (prismaClient.usuario.findFirst as jest.Mock<never>).mockResolvedValueOnce({
-    //     id_turno: id_turno,
-    //     inicio: null,
-    //     fim: startOfDay,
-    //   });// Aqui estamos forçando o tipo como um Partial de Usuario
-      
-
-    //   // Testa se o serviço lança o erro correto
-    //   const resutl = await verifyPoints.execute({ id_turno: id_turno, date: startOfDay});
-    //   expect(resutl).toBe("Data fim já registrada")
-    // })
+    });
 
     it("Deve me dar o return se tem data inicio já está registrada e data fim esta nulla", async ()=>{
       const date = new Date(2024,11,16)
 
-        const teste = {
+        const mockQuery = {
           usuarioId: 3,
           data_inicio: date,
-          data_fim: null
+          data_fim: new Date(9999,11,12),
         };
       
         (prismaClient.turno.findFirst as jest.Mock<never>).mockResolvedValueOnce({
-          usuarioId: teste.usuarioId,
-          inicio: new Date(),
-          fim: null,
+          usuarioId: mockQuery.usuarioId,
+          inicio: date,
+          fim: new Date(9999,11,12),
         });
 
-        const resultado = await verifyPoints.execute({ usuarioId: teste.usuarioId, data_inicio: teste.data_inicio, data_fim: null });
+        const resultado = await verifyPoints.execute({ usuarioId: mockQuery.usuarioId, data_inicio: mockQuery.data_inicio, data_fim: null });
 
         expect(resultado).toBe("Data inicio já registrada");
 
         expect(prismaClient.turno.findFirst).toHaveBeenCalledWith({
           where: {
-            usuarioId: teste.usuarioId,
+            usuarioId: mockQuery.usuarioId,
             OR: [
               {
                 inicio: {
-                  gte: teste.data_inicio.toISOString().split('T')[0]
+                  gte: mockQuery.data_inicio.toISOString().split('T')[0]
                 }
               },
               {
                 fim: {
-                  gte: null
+                  gte: mockQuery.data_fim
                 }
               },
             ]
@@ -172,25 +145,146 @@ describe("API_services", () => {
         });
 
 
-      })
+      });
 
 
-    //   it("Deve me dar o return ambas as datas já estão registradas", async ()=>{
-    //     // Simula que o e-mail já existe (retorno de findUnique)
-    //     const id_turno = 1;
+      it("Deve me dar o return se tem data fim já está registrada e data inicio esta nulla", async ()=>{
+        const date = new Date(2024,11,16)
+  
+          const mockQuery = {
+            usuarioId: 3,
+            data_inicio: new Date(9999,11,12),
+            data_fim: date,
+          };
+        
+          (prismaClient.turno.findFirst as jest.Mock<never>).mockResolvedValueOnce({
+            usuarioId: mockQuery.usuarioId,
+            inicio: new Date(9999,11,12),
+            fim: date,
+          });
+  
+          const resultado = await verifyPoints.execute({ usuarioId: mockQuery.usuarioId, data_inicio: null, data_fim: mockQuery.data_fim });
+  
+          expect(resultado).toBe("Data fim já registrada");
+  
+          expect(prismaClient.turno.findFirst).toHaveBeenCalledWith({
+            where: {
+              usuarioId: mockQuery.usuarioId,
+              OR: [
+                {
+                  inicio: {
+                    gte: mockQuery.data_inicio
+                  }
+                },
+                {
+                  fim: {
+                    gte: mockQuery.data_fim.toISOString().split('T')[0]
+                  }
+                },
+              ]
+            },
+            select: {
+              id: true,
+              usuarioId: true,
+              fim: true,
+              inicio: true,
+            }
+          });
+  
+  
+        });
 
-    //     (prismaClient.usuario.findFirst as jest.Mock<never>).mockResolvedValueOnce({
-    //       id_turno:1,
-    //       inicio: new Date(),
-    //       fim: new Date(),
-    //     });// Aqui estamos forçando o tipo como um Partial de Usuario
+        it("Deve me dar o return se tem data fim e a data inicio já registradas", async ()=>{
+          const date = new Date(2024,11,16)
+    
+            const mockQuery = {
+              usuarioId: 3,
+              data_inicio: date,
+              data_fim: date,
+            };
+          
+            (prismaClient.turno.findFirst as jest.Mock<never>).mockResolvedValueOnce({
+              usuarioId: mockQuery.usuarioId,
+              inicio: date,
+              fim: date,
+            });
+    
+            const resultado = await verifyPoints.execute({ usuarioId: mockQuery.usuarioId, data_inicio: mockQuery.data_fim, data_fim: mockQuery.data_fim });
+    
+            expect(resultado).toBe("Ambas as datas registradas");
+    
+            expect(prismaClient.turno.findFirst).toHaveBeenCalledWith({
+              where: {
+                usuarioId: mockQuery.usuarioId,
+                OR: [
+                  {
+                    inicio: {
+                      gte: mockQuery.data_inicio.toISOString().split('T')[0]
+                    }
+                  },
+                  {
+                    fim: {
+                      gte: mockQuery.data_fim.toISOString().split('T')[0]
+                    }
+                  },
+                ]
+              },
+              select: {
+                id: true,
+                usuarioId: true,
+                fim: true,
+                inicio: true,
+              }
+            });
+    
+    
+          });
 
-    //     // Testa se o serviço lança o erro correto
-    //     await expect(verifyPoints.execute({ id_turno: id_turno})).toBe("Data fim já registrada")
-    //   })
-
-
-
+          it("Deve me dar o return que nenhuma data foi informada", async ()=>{
+            const date = new Date(2024,11,16)
+      
+              const mockQuery = {
+                usuarioId: 3,
+                data_inicio: new Date(9999,11,12),
+                data_fim: new Date(9999,11,12),
+              };
+            
+              (prismaClient.turno.findFirst as jest.Mock<never>).mockResolvedValueOnce({
+                usuarioId: mockQuery.usuarioId,
+                inicio: new Date(9999,11,12),
+                fim: new Date(9999,11,12),
+              });
+      
+              const resultado = await verifyPoints.execute({ usuarioId: mockQuery.usuarioId, data_inicio: mockQuery.data_fim, data_fim: mockQuery.data_fim });
+      
+              expect(resultado).toBe("Nenhuma data informada!");
+      
+              expect(prismaClient.turno.findFirst).toHaveBeenCalledWith({
+                where: {
+                  usuarioId: mockQuery.usuarioId,
+                  OR: [
+                    {
+                      inicio: {
+                        gte: mockQuery.data_inicio.toISOString().split('T')[0]
+                      }
+                    },
+                    {
+                      fim: {
+                        gte: mockQuery.data_fim.toISOString().split('T')[0]
+                      }
+                    },
+                  ]
+                },
+                select: {
+                  id: true,
+                  usuarioId: true,
+                  fim: true,
+                  inicio: true,
+                }
+              });
+      
+      
+            })
     
   });
 

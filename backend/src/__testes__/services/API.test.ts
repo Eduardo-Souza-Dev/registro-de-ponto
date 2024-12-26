@@ -15,7 +15,7 @@ jest.mock("../../prisma_connection", () => ({
   },
   turno: {
     findFirst: jest.fn(),
-    findMany: jest.fn()
+    findMany: jest.fn(),
   },
 }));
 
@@ -240,9 +240,7 @@ describe("API_services", () => {
     
           });
 
-          it("Deve me dar o return que nenhuma data foi informada", async ()=>{
-            const date = new Date(2024,11,16)
-      
+          it("Deve me dar o return que nenhuma data foi informada", async ()=>{      
               const mockQuery = {
                 usuarioId: 3,
                 data_inicio: new Date(9999,11,12),
@@ -284,6 +282,19 @@ describe("API_services", () => {
               });
       
       
+            })
+
+
+            it("Deve me retornar que o Update de duração de horas do turno do usuário foi atualizado com sucesso", async ()=>{
+              const dataInicio = new Date("December 26, 2024 08:02:00");
+              const dataFim = new Date("December 26, 2024 17:05:00");
+
+              (prismaClient.turno.findFirst as jest.Mock<never>).mockResolvedValueOnce({
+                usuarioId: 3,
+                inicio: dataInicio,
+                fim: dataFim,
+              })
+
             })
     
   });

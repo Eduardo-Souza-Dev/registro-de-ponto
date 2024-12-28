@@ -4,6 +4,8 @@ import RegisterEntriesService from "../../services/RegisterEntriesServices";
 import RegisterExitService from "../../services/RegisterExitService";
 import AllPointsServices from "../../services/AllPointsServices";
 import VerifyPointServices from "../../services/VerifyPointServices";
+import VerifiUserHourService from "../../services/VerifyUserHourServices";
+
 import prismaClient from "../../prisma_connection";
 import {describe, expect, test, it, jest, afterEach} from '@jest/globals';
 
@@ -16,6 +18,7 @@ jest.mock("../../prisma_connection", () => ({
   turno: {
     findFirst: jest.fn(),
     findMany: jest.fn(),
+    update: jest.fn(),
   },
 }));
 
@@ -27,6 +30,7 @@ describe("API_services", () => {
     const serviceRegisterExit = new RegisterExitService();
     const serviceAllPoints = new AllPointsServices();
     const verifyPoints = new VerifyPointServices();
+    const verifyUserHour = new VerifiUserHourService();
   
     afterEach(() => {
       jest.clearAllMocks();
@@ -288,12 +292,26 @@ describe("API_services", () => {
             it("Deve me retornar que o Update de duração de horas do turno do usuário foi atualizado com sucesso", async ()=>{
               const dataInicio = new Date("December 26, 2024 08:02:00");
               const dataFim = new Date("December 26, 2024 17:05:00");
+              let minutes = 1000 * 60;
+              let hours = minutes * 60;
 
               (prismaClient.turno.findFirst as jest.Mock<never>).mockResolvedValueOnce({
+                id: 7,
+                inicio: dataInicio,
+                fim: dataFim,
+              });
+
+              (prismaClient.turno.update as jest.Mock<never>).mockResolvedValueOnce({
+                id: 7,
                 usuarioId: 3,
                 inicio: dataInicio,
                 fim: dataFim,
-              })
+                duracaoHoras: Math.round(dataFim.getTime() / hours) - Math.round(dataInicio.getTime() / hours),
+              });
+
+              const resultado = await verifyUserHour.execute({ id: 7 });
+
+              expect(resultado).toBe("Duração de horas atualizada com sucesso!");
 
             })
     

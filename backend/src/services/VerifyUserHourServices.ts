@@ -1,24 +1,25 @@
 import prismaClient from "../prisma_connection";
 
 interface idTurno{
-    id_turno: number;
+    id: number;
 }
 
 class VerifiUserHourService{
-    async execute( { id_turno }: idTurno ){
+    async execute( { id }: idTurno ){
 
-        if(!id_turno){
+        if(!id){
             throw new Error('ID inválido!');
         }
 
         const verifyUserHour = await prismaClient.turno.findFirst({
             where: {
-                id: id_turno
+                id: id
             },
             select: {
                 id: true,
                 usuarioId: true,
                 inicio: true,
+                duracaoHoras: true,
                 fim: true
             }
         })
@@ -36,20 +37,25 @@ class VerifiUserHourService{
 
                 const updateUserHour = await prismaClient.turno.update({
                     where:{
-                        id: id_turno
+                        id: id
                     },
                     data:{
-                        duracaoHoras: Math.round(timeInicio / hours) - Math.round(timeFim / hours),
+                        duracaoHoras: Math.round(timeFim / hours) - Math.round(timeInicio / hours),
                     }
 
                 })
 
-                if(updateUserHour){
+                console.log("Valor de updateUserHour: " , updateUserHour?.duracaoHoras);
+
+                if(updateUserHour?.duracaoHoras){
                     return "Duração de horas atualizada com sucesso!";
                 }
             }
 
+        }else{
+            return "Id não identificado!";
         }
+        
 
 
     }

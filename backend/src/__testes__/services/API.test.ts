@@ -102,7 +102,7 @@ describe("API_services", () => {
 
 
     it('Deve me retornar se que o id do usuário é inválido',async () =>{
-      await expect(verifyPoints.execute({ usuarioId: undefined as unknown as number, data_inicio:new Date(), data_fim: new Date() })).rejects.toThrow('ID inválido!');
+      await expect(verifyPoints.execute({ id: undefined as unknown as number, data_inicio:new Date(), data_fim: new Date() })).rejects.toThrow('ID inválido!');
     });
 
     it("Deve me dar o return se tem data inicio já está registrada e data fim esta nulla", async ()=>{
@@ -120,7 +120,7 @@ describe("API_services", () => {
           fim: new Date(9999,11,12),
         });
 
-        const resultado = await verifyPoints.execute({ usuarioId: mockQuery.usuarioId, data_inicio: mockQuery.data_inicio, data_fim: null });
+        const resultado = await verifyPoints.execute({ id: mockQuery.usuarioId, data_inicio: mockQuery.data_inicio, data_fim: null });
 
         expect(resultado).toBe("Data inicio já registrada");
 
@@ -167,7 +167,7 @@ describe("API_services", () => {
             fim: date,
           });
   
-          const resultado = await verifyPoints.execute({ usuarioId: mockQuery.usuarioId, data_inicio: null, data_fim: mockQuery.data_fim });
+          const resultado = await verifyPoints.execute({ id: mockQuery.usuarioId, data_inicio: null, data_fim: mockQuery.data_fim });
   
           expect(resultado).toBe("Data fim já registrada");
   
@@ -213,7 +213,7 @@ describe("API_services", () => {
               fim: date,
             });
     
-            const resultado = await verifyPoints.execute({ usuarioId: mockQuery.usuarioId, data_inicio: mockQuery.data_fim, data_fim: mockQuery.data_fim });
+            const resultado = await verifyPoints.execute({ id: mockQuery.usuarioId, data_inicio: mockQuery.data_fim, data_fim: mockQuery.data_fim });
     
             expect(resultado).toBe("Ambas as datas registradas");
     
@@ -257,7 +257,7 @@ describe("API_services", () => {
                 fim: new Date(9999,11,12),
               });
       
-              const resultado = await verifyPoints.execute({ usuarioId: mockQuery.usuarioId, data_inicio: mockQuery.data_fim, data_fim: mockQuery.data_fim });
+              const resultado = await verifyPoints.execute({ id: mockQuery.usuarioId, data_inicio: mockQuery.data_fim, data_fim: mockQuery.data_fim });
       
               expect(resultado).toBe("Nenhuma data informada!");
       

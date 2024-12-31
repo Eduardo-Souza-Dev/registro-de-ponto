@@ -3,10 +3,10 @@ import VerifiUserHourService from "../services/VerifyUserHourServices";
 
 class VerifiUserHourController {
     async handle(req: Request, res: Response){
-        const { id_turno } = req.body;
+        const { id } = req.body;
 
         const verifyUserHourService = new VerifiUserHourService();
-        const verify = await verifyUserHourService.execute({id_turno});
+        const verify = await verifyUserHourService.execute({id});
         res.json(verify);
 
     }

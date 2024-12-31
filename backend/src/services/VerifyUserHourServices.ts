@@ -4,6 +4,7 @@ interface idTurno{
     id: number;
 }
 
+// Essa API faz o calculo da duração de horas do turno
 class VerifiUserHourService{
     async execute( { id }: idTurno ){
 

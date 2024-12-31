@@ -29,20 +29,32 @@ const Ponto: React.FC = () => {
 
   const handlePonto = async () => {
     try {
+      // Verifica o código do usuário
       const entriesPoint = await axios.post('https://registro-de-ponto.onrender.com/user/cod', {
         codigo: codigoUsuario, 
       });
   
+      // Captura do código do mesmo para fazer o registro
       const id = entriesPoint.data.id;
-      console.log('ID do usuário:', id);
-  
-      const response = await axios.post('https://registro-de-ponto.onrender.com/entry/register', {
+      const data_inicio = new Date();
+      const data_fim = new Date();
+
+      // Vamos chamar a API de verificação de ponto, e com ela vamos fazer o controle se vai ser registrado uma entrada ou saída
+      const verifyPoint = await axios.post('https://registro-de-ponto.onrender.com/verify/point', {
         id,
+        data_inicio,
+        data_fim,
       });
+
+      const teste = verifyPoint.data;
+      console.log(teste);
   
-      console.log('Resposta do registro:', response.data);
+      // // Registro do ponto do usuário
+      // const response = await axios.post('https://registro-de-ponto.onrender.com/entry/register', {
+      //   id,
+      // });
+  
     } catch (error) {
-      console.error('Erro ao consultar usuário:', error);
       toast.error('Erro ao consultar usuário. Tente novamente.');
     }
   };

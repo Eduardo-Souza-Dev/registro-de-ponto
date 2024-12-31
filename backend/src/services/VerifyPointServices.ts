@@ -1,14 +1,15 @@
 import prismaClient from "../prisma_connection";
 
 interface IdTurno {
-    usuarioId: number;
+    id: number;
     data_inicio: Date | null;
     data_fim: Date | null;
 }
 
+// Essa API verifica se tem alguma data de inicio ou de fim já registrada
 class VerifyPointServices{
-    async execute({usuarioId, data_inicio, data_fim}: IdTurno){
-        if(!usuarioId){
+    async execute({id, data_inicio, data_fim}: IdTurno){
+        if(!id){
             throw new Error('ID inválido!');
         }
 
@@ -33,7 +34,7 @@ class VerifyPointServices{
         
         const verifyPoint = await prismaClient.turno.findFirst({
                 where: {
-                    usuarioId: usuarioId,
+                    usuarioId: id,
                         OR: [
 
                             {

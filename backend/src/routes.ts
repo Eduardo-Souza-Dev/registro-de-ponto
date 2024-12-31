@@ -6,7 +6,8 @@ import ConsultUserController from './controllers/ConsultUserController';
 import RegisterEntriesController from './controllers/RegisterEntriesController';
 import RegisterExitController from './controllers/RegisterExitController';
 import RegisterUserController from './controllers/RegisterUserController';
-
+import VerifiUserHourController from './controllers/VerifyUserHourController';
+import VerifyPointController from './controllers/VerifyPointController';
 
 const router = Router();
 
@@ -45,5 +46,20 @@ router.post('/exit/register', (req, res) =>{
     registerExitController.handle(req, res);
 })
 
+
+// -- VERIFICAÇÃO DE PONTO
+
+router.post('/verify/point', async (req, res) => {
+    const verifyPoint = new VerifyPointController;
+    verifyPoint.handle(req, res);
+});
+
+
+// -- VERIFICAÇÃO DE HORA
+
+router.post('/verify/hour', async (req, res) => {
+    const verifyUserHour = new VerifiUserHourController;
+    verifyUserHour.handle(req, res);
+});
 
 export default router;

@@ -4,6 +4,7 @@ import styles from '../css/CodPage.module.css'
 import Link from 'next/link';
 import axios from 'axios';  // Certifique-se de instalar axios com `npm install axios` ou `yarn add axios`
 import { toast } from 'react-toastify';
+import { format, formatDate } from 'date-fns';
 
 const Ponto: React.FC = () => {
   const [codigoUsuario, setCodigoUsuario] = useState('');
@@ -36,8 +37,12 @@ const Ponto: React.FC = () => {
   
       // Captura do código do mesmo para fazer o registro
       const id = entriesPoint.data.id;
-      const data_inicio = new Date();
-      const data_fim = new Date();
+      const now = new Date();
+      const currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const data_inicio = currentDate.toISOString().split('T')[0];
+      const data_fim = currentDate.toISOString().split('T')[0];
+
+      console.log(currentDate.toISOString().split('T')[0]);
 
       // Vamos chamar a API de verificação de ponto, e com ela vamos fazer o controle se vai ser registrado uma entrada ou saída
       const verifyPoint = await axios.post('https://registro-de-ponto.onrender.com/verify/point', {
@@ -46,7 +51,7 @@ const Ponto: React.FC = () => {
         data_fim,
       });
 
-      const teste = verifyPoint.data;
+      const teste = verifyPoint;
       console.log(teste);
   
       // // Registro do ponto do usuário

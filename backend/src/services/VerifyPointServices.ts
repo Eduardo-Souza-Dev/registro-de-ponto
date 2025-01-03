@@ -19,8 +19,9 @@ class VerifyPointServices{
 
         if(data_inicio !== null){
             const date = new Date(data_inicio);
-            const startOfDay = new Date(date.getFullYear(),date.getMonth(), date.getDate())
-            dateStringInicio = startOfDay.toISOString().split('T')[0]
+            const startOfDay = new Date(date.getFullYear(),date.getMonth(), date.getDate());
+            dateStringInicio = startOfDay.toISOString().split('T')[0];
+            console.log(dateStringInicio);
         }else{
             dateStringInicio = error;
         }

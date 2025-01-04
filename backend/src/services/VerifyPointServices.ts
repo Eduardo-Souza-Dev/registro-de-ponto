@@ -20,7 +20,7 @@ class VerifyPointServices{
         if(data_inicio !== null){
             const date = new Date(data_inicio);
             const startOfDay = new Date(date.getFullYear(),date.getMonth(), date.getDate())
-            dateStringInicio = startOfDay.toISOString().split('T')[0]
+            dateStringInicio = startOfDay.toISOString();
         }else{
             dateStringInicio = error;
         }
@@ -28,7 +28,7 @@ class VerifyPointServices{
         if(data_fim !== null){
             const date = new Date(data_fim);
             const endOfDay = new Date(date.getFullYear(),date.getMonth(), date.getDate());
-            dateStringFim = endOfDay.toISOString().split('T')[0]
+            dateStringFim = endOfDay.toISOString();
         }else{
             dateStringFim = error;
         }

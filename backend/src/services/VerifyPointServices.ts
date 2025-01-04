@@ -18,18 +18,15 @@ class VerifyPointServices{
         const error = new Date(9999,11,12);
 
         if(data_inicio !== null){
-            const date = new Date(data_inicio);
-            const startOfDay = new Date(date.getFullYear(),date.getMonth(), date.getDate());
-            dateStringInicio = startOfDay.toISOString();
-            console.log(dateStringInicio);
+            const startOfDay = new Date(data_inicio.getFullYear(),data_inicio.getMonth(), data_inicio.getDate())
+            dateStringInicio = startOfDay.toISOString().split('T')[0]
         }else{
             dateStringInicio = error;
         }
         
         if(data_fim !== null){
-            const date = new Date(data_fim);
-            const endOfDay = new Date(date.getFullYear(),date.getMonth(), date.getDate());
-            dateStringFim = endOfDay.toISOString();
+            const endOfDay = new Date(data_fim.getFullYear(),data_fim.getMonth(), data_fim.getDate());
+            dateStringFim = endOfDay.toISOString().split('T')[0]
         }else{
             dateStringFim = error;
         }
@@ -59,6 +56,8 @@ class VerifyPointServices{
                     inicio: true,
                 }
             })
+
+            console.log(verifyPoint);
 
             if(verifyPoint?.inicio && verifyPoint?.fim){
                 // Basicamente estou verificando se a data de inicio e fim existem

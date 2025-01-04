@@ -18,17 +18,17 @@ class VerifyPointServices{
         const error = new Date(9999,11,12);
 
         if(data_inicio !== null){
-            const date = new Date(data_inicio);
-            const startOfDay = new Date(date.getFullYear(),date.getMonth(), date.getDate())
-            dateStringInicio = startOfDay.toISOString();
+            // const date = new Date(data_inicio);
+            // const startOfDay = new Date(date.getFullYear(),date.getMonth(), date.getDate())
+            dateStringInicio = data_inicio
         }else{
             dateStringInicio = error;
         }
         
         if(data_fim !== null){
-            const date = new Date(data_fim);
-            const endOfDay = new Date(date.getFullYear(),date.getMonth(), date.getDate());
-            dateStringFim = endOfDay.toISOString();
+            // const date = new Date(data_fim);
+            // const endOfDay = new Date(date.getFullYear(),date.getMonth(), date.getDate());
+            dateStringFim = data_fim;
         }else{
             dateStringFim = error;
         }

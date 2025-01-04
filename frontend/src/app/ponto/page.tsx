@@ -38,11 +38,10 @@ const Ponto: React.FC = () => {
       // Captura do código do mesmo para fazer o registro
       const id = entriesPoint.data.id;
       const now = new Date();
-      const currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      const data_inicio = currentDate.toISOString().split('T')[0];
-      const data_fim = currentDate.toISOString().split('T')[0];
+      const data_inicio = now.toISOString();
+      const data_fim = now.toISOString();
 
-      console.log(currentDate.toISOString().split('T')[0]);
+      console.log(now.toISOString());
 
       // Vamos chamar a API de verificação de ponto, e com ela vamos fazer o controle se vai ser registrado uma entrada ou saída
       const verifyPoint = await axios.post('https://registro-de-ponto.onrender.com/verify/point', {

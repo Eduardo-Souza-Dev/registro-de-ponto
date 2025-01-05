@@ -22,7 +22,7 @@ class RegisterExitService{
         }
 
         const now = new Date();
-        const dataDoBanco = "0000-00-00 00:00:00";
+        const dataDoBanco = "0000-00-00T00:00:00.000Z";
 
         const verifyDate = await prismaClient.turno.findFirst({
           where: {
@@ -34,7 +34,9 @@ class RegisterExitService{
         })
 
         if(verifyDate?.inicio){
-          if((verifyDate?.inicio.getTime() < now.getTime()) || (verifyDate?.inicio.getTime() > now.getTime())){
+          console.log("Valor de data de inicio: " + verifyDate?.inicio.getTime());
+          console.log("Valor de data sendo enviada agora: " + now.getTime());
+          if((verifyDate?.inicio.getTime() > now.getTime())){
             const turnoUser = await prismaClient.turno.update({
               where: {
                 id: id,
@@ -45,21 +47,20 @@ class RegisterExitService{
             });
 
              return turnoUser;
+          }else{
+            
+            const turnoUser = await prismaClient.turno.update({
+              where: {
+                id: id,
+              },
+              data: {
+                fim: new Date(),
+              },
+            });
+
+            return turnoUser;
           }
           
-        }else{
-
-          const turnoUser = await prismaClient.turno.update({
-            where: {
-              id: id,
-            },
-            data: {
-              fim: new Date(),
-            },
-          });
-
-        return turnoUser;
-
         }
 
 

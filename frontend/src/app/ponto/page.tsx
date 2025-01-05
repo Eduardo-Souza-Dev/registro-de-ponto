@@ -50,13 +50,33 @@ const Ponto: React.FC = () => {
         data_fim,
       });
 
-      const teste = verifyPoint;
-      console.log(teste);
+      if(verifyPoint.data === "Nenhuma data registrada"){
+           // Registro do ponto do usuário
+        const response = await axios.post('https://registro-de-ponto.onrender.com/entry/register', {
+          id,
+        });
+
+        toast.success("Entrada registrada com sucesso!");
+        return;
+      }
+
+      if(verifyPoint.data === "Ambas as datas registradas"){
+        // Pontos da data de hoje já registrados
+        toast.success("Pontos de hoje já registrados!");
+        return;
+      }
+
+      if(verifyPoint.data === "Data inicio já registrada"){
+        // Registro do ponto do usuário
+        const response = await axios.post('https://registro-de-ponto.onrender.com/exit/register', {
+          id,
+        });
+
+        toast.success("Saída registrada com sucesso!");
+        return;
+      }
   
-      // Registro do ponto do usuário
-      // const response = await axios.post('https://registro-de-ponto.onrender.com/entry/register', {
-      //   id,
-      // });
+   
   
     } catch (error) {
       console.error('Erro ao registrar ponto:', error);

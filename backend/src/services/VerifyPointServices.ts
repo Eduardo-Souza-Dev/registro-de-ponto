@@ -17,20 +17,13 @@ class VerifyPointServices{
         let dateStringFim;
         const error = new Date(9999,11,12);
 
-        console.log("Valor de data_inicio: " + data_inicio);
-        console.log("Valor de data_fim: " + data_fim);
-
         if(data_inicio !== null){
-            // const date = new Date(data_inicio);
-            // const startOfDay = new Date(date.getFullYear(),date.getMonth(), date.getDate())
             dateStringInicio = data_inicio
         }else{
             dateStringInicio = error;
         }
         
         if(data_fim !== null){
-            // const date = new Date(data_fim);
-            // const endOfDay = new Date(date.getFullYear(),date.getMonth(), date.getDate());
             dateStringFim = data_fim;
         }else{
             dateStringFim = error;
@@ -87,9 +80,9 @@ class VerifyPointServices{
 
             }
 
-            if(verifyPoint == null){ // Aí se não tem nenhuma data ele vai registra a primeira do dia
+            // Aí se não tem nenhuma data ele vai registra a primeira do dia
                 return "Nenhuma data registrada";
-            }
+            
 
     }
 

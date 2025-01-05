@@ -130,7 +130,7 @@ describe("API_services", () => {
             OR: [
               {
                 inicio: {
-                  gte: mockQuery.data_inicio.toISOString().split('T')[0]
+                  gte: mockQuery.data_inicio
                 }
               },
               {
@@ -182,7 +182,7 @@ describe("API_services", () => {
                 },
                 {
                   fim: {
-                    gte: mockQuery.data_fim.toISOString().split('T')[0]
+                    gte: mockQuery.data_fim
                   }
                 },
               ]
@@ -223,12 +223,12 @@ describe("API_services", () => {
                 OR: [
                   {
                     inicio: {
-                      gte: mockQuery.data_inicio.toISOString().split('T')[0]
+                      gte: mockQuery.data_inicio
                     }
                   },
                   {
                     fim: {
-                      gte: mockQuery.data_fim.toISOString().split('T')[0]
+                      gte: mockQuery.data_fim
                     }
                   },
                 ]
@@ -259,7 +259,7 @@ describe("API_services", () => {
       
               const resultado = await verifyPoints.execute({ id: mockQuery.usuarioId, data_inicio: mockQuery.data_fim, data_fim: mockQuery.data_fim });
       
-              expect(resultado).toBe("Nenhuma data informada!");
+              expect(resultado).toBe("Nenhuma data registrada");
       
               expect(prismaClient.turno.findFirst).toHaveBeenCalledWith({
                 where: {
@@ -267,12 +267,12 @@ describe("API_services", () => {
                   OR: [
                     {
                       inicio: {
-                        gte: mockQuery.data_inicio.toISOString().split('T')[0]
+                        gte: mockQuery.data_inicio
                       }
                     },
                     {
                       fim: {
-                        gte: mockQuery.data_fim.toISOString().split('T')[0]
+                        gte: mockQuery.data_fim
                       }
                     },
                   ]

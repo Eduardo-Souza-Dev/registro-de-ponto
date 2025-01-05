@@ -4,7 +4,6 @@ import styles from '../css/CodPage.module.css'
 import Link from 'next/link';
 import axios from 'axios';  // Certifique-se de instalar axios com `npm install axios` ou `yarn add axios`
 import { toast } from 'react-toastify';
-import { format, formatDate } from 'date-fns';
 
 const Ponto: React.FC = () => {
   const [codigoUsuario, setCodigoUsuario] = useState('');
@@ -39,8 +38,8 @@ const Ponto: React.FC = () => {
       const id = entriesPoint.data.id;
       const now = new Date();
       const localDate = new Date(now.getTime() + -3 * 60 * 60 * 1000);
-      const data_inicio = localDate.toISOString().replace("Z", "-03:00");
-      const data_fim = localDate.toISOString().replace("Z", "-03:00");
+      const data_inicio = localDate.toISOString();
+      const data_fim = localDate.toISOString();
 
       console.log(now.toISOString());
 
@@ -54,12 +53,13 @@ const Ponto: React.FC = () => {
       const teste = verifyPoint;
       console.log(teste);
   
-      // // Registro do ponto do usuário
+      // Registro do ponto do usuário
       // const response = await axios.post('https://registro-de-ponto.onrender.com/entry/register', {
       //   id,
       // });
   
     } catch (error) {
+      console.error('Erro ao registrar ponto:', error);
       toast.error('Erro ao consultar usuário. Tente novamente.');
     }
   };

@@ -17,8 +17,8 @@ class VerifyPointServices{
         let dateStringFim;
         const error = new Date(9999,11,12);
 
-        console.log("Valor de data_inicio: " + dateStringInicio);
-        console.log("Valor de data_fim: " + dateStringFim);
+        console.log("Valor de data_inicio: " + data_inicio);
+        console.log("Valor de data_fim: " + data_fim);
 
         if(data_inicio !== null){
             // const date = new Date(data_inicio);

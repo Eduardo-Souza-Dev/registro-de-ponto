@@ -38,8 +38,9 @@ const Ponto: React.FC = () => {
       // Captura do código do mesmo para fazer o registro
       const id = entriesPoint.data.id;
       const now = new Date();
-      const data_inicio = now.toISOString();
-      const data_fim = now.toISOString();
+      const localDate = new Date(now.getTime() + -3 * 60 * 60 * 1000);
+      const data_inicio = localDate.toISOString().replace("Z", "-03:00");
+      const data_fim = localDate.toISOString().replace("Z", "-03:00");
 
       console.log(now.toISOString());
 
